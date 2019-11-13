@@ -1,4 +1,3 @@
-import { useMountedState } from 'react-use'
 import Link from 'next/link'
 import dynamic from 'next/dynamic'
 import Layout from '../../components/layout'
@@ -16,7 +15,6 @@ const Map = dynamic(
 )
 
 const Demo = () => {
-  const isMounted = useMountedState()
   return (
     <Layout noFooter>
       <section className='section' style={{ paddingBottom: 0 }}>
@@ -38,7 +36,7 @@ const Demo = () => {
         </div>
       </section>
       <div className='map'>
-        {isMounted && <Map />}
+        <Map />
       </div>
       <style jsx>{`
         .content-container {
