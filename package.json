@@ -10,12 +10,17 @@
   },
   "dependencies": {
     "@zeit/next-css": "^1.0.1",
+    "firebase": "7.4.0",
+    "firebase-admin": "8.7.0",
     "lodash": "^4.17.15",
     "mapbox-gl": "^1.5.0",
     "moment-timezone": "^0.5.27",
+    "ms": "2.1.2",
     "next": "^9.1.4-canary.3",
+    "now": "latest",
     "react": "^16.11.0",
     "react-dom": "^16.11.0",
+    "react-map-gl": "5.1.2",
     "react-mapbox-gl": "^4.7.3",
     "react-use": "^13.6.2"
   },
