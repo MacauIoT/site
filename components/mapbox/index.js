@@ -1,25 +1,25 @@
-import { useState } from "react";
-import ReactMapboxGl, { GeoJSONLayer } from "react-mapbox-gl";
-import moment from "moment-timezone";
+import { useState } from 'react'
+import ReactMapboxGl, { GeoJSONLayer } from 'react-mapbox-gl'
+import moment from 'moment-timezone'
 // import geojson from "../../lib/geo";
 
 const Map = ReactMapboxGl({
   accessToken:
-    "pk.eyJ1IjoiY29tdXMiLCJhIjoiY2pzeDd4cTlqMHBtcjRhb2QzdzM2czdkYyJ9.1-ViE9zpaFG9dO9-ajNPTg",
+    'pk.eyJ1IjoiY29tdXMiLCJhIjoiY2pzeDd4cTlqMHBtcjRhb2QzdzM2czdkYyJ9.1-ViE9zpaFG9dO9-ajNPTg',
   // maxZoom: 14,
   minZoom: 11.8
-});
+})
 
 export default ({ geojson, value }) => {
   // console.log(geojson);
-  const [state, setState] = useState({
+  const [state] = useState({
     zoom: [11.97],
     maxBounds: [
       [113.32931228327197, 22.025083738662303], // Southwest coordinates
       [113.81605425662934, 22.306704787549364] // Northeast coordinates
     ],
     center: [113.566, 22.162]
-  });
+  })
   return (
     <>
       <Map
@@ -28,20 +28,20 @@ export default ({ geojson, value }) => {
         maxBounds={state.maxBounds}
         center={state.center}
         containerStyle={{
-          height: "100%",
-          width: "100%"
+          height: '100%',
+          width: '100%'
         }}
       >
         <GeoJSONLayer
           data={geojson}
           circleLayout={{
-            visibility: "visible"
+            visibility: 'visible'
           }}
           circlePaint={{
-            "circle-radius": [
-              "interpolate",
-              ["linear"],
-              ["number", ["get", "pm2.5"]],
+            'circle-radius': [
+              'interpolate',
+              ['linear'],
+              ['number', ['get', 'pm2.5']],
               0,
               4,
               12,
@@ -51,71 +51,71 @@ export default ({ geojson, value }) => {
               500,
               50
             ],
-            "circle-color": [
-              "interpolate",
-              ["linear"],
-              ["number", ["get", "pm2.5"]],
+            'circle-color': [
+              'interpolate',
+              ['linear'],
+              ['number', ['get', 'pm2.5']],
               0,
-              "#2DC4B2",
+              '#2DC4B2',
               12,
-              "#2DC4B2",
+              '#2DC4B2',
 
               12.1,
-              "#3BB3C3",
+              '#3BB3C3',
               35.4,
-              "#3BB3C3",
+              '#3BB3C3',
 
               35.5,
-              "#669EC4",
+              '#669EC4',
               55.4,
-              "#669EC4",
+              '#669EC4',
 
               55.5,
-              "#8B88B6",
+              '#8B88B6',
               150.4,
-              "#8B88B6",
+              '#8B88B6',
 
               150.5,
-              "#A2719B",
+              '#A2719B',
               250.4,
-              "#A2719B",
+              '#A2719B',
 
               250.5,
-              "#AA5E79",
+              '#AA5E79',
               500.4,
-              "#AA5E79"
+              '#AA5E79'
             ],
-            "circle-opacity": [
-              "interpolate",
-              ["linear"],
-              ["number", ["get", "createdAt"]],
+            'circle-opacity': [
+              'interpolate',
+              ['linear'],
+              ['number', ['get', 'createdAt']],
               moment()
-                .tz("Asia/Macau")
-                .subtract(3, "hours")
-                .subtract(-value, "minutes")
+                .tz('Asia/Macau')
+                .subtract(3, 'hours')
+                .subtract(-value, 'minutes')
                 .valueOf(),
               0,
               moment()
-                .tz("Asia/Macau")
-                .subtract(1, "hours")
-                .subtract(-value, "minutes")
+                .tz('Asia/Macau')
+                .subtract(1, 'hours')
+                .subtract(-value, 'minutes')
                 .valueOf(),
               0.5,
               moment()
-                .tz("Asia/Macau")
-                .subtract(-value, "minutes")
+                .tz('Asia/Macau')
+                .subtract(-value, 'minutes')
                 .valueOf(),
               0.8,
               moment()
-                .tz("Asia/Macau")
-                .add(1, "hours")
-                .subtract(-value, "minutes")
+                .tz('Asia/Macau')
+                .add(1, 'hours')
+                .subtract(-value, 'minutes')
                 .valueOf(),
               0.5,
               moment()
-                .tz("Asia/Macau")
-                .add(3, "hours")
-                .subtract(-value, "minutes")
+                .tz('Asia/Macau')
+                .add(3, 'hours')
+                .subtract(-value, 'minutes')
                 .valueOf(),
               0
             ]
@@ -125,19 +125,19 @@ export default ({ geojson, value }) => {
           <Feature coordinates={[-0.481747846041145, 51.3233379650232]} />
         </Layer> */}
       </Map>
-      <div id="console">
-        <h3 className="is-size-5">Air Quality</h3>
+      <div id='console'>
+        <h3 className='is-size-5'>Air Quality</h3>
         <p>Real-time air pollution monitoring with sensors on city bus</p>
-        <div className="session">
+        <div className='session'>
           <h4>PM 2.5 levels</h4>
-          <div className="row colors" />
-          <div className="row labels">
-            <div className="l">0</div>
-            <div className="l">1</div>
-            <div className="l">2</div>
-            <div className="l">3</div>
-            <div className="l">4</div>
-            <div className="l">5+</div>
+          <div className='row colors' />
+          <div className='row labels'>
+            <div className='l'>0</div>
+            <div className='l'>1</div>
+            <div className='l'>2</div>
+            <div className='l'>3</div>
+            <div className='l'>4</div>
+            <div className='l'>5+</div>
           </div>
         </div>
       </div>
@@ -190,7 +190,8 @@ export default ({ geojson, value }) => {
           display: inline-block;
           text-align: center;
         }
-      `}</style>
+      `}
+      </style>
     </>
-  );
-};
+  )
+}

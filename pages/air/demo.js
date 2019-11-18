@@ -1,106 +1,106 @@
-import { useEffect, useState } from "react";
-import Link from "next/link";
-import dynamic from "next/dynamic";
-import { firebase } from "../../lib/firebase";
-import Layout from "../../components/layout";
+import { useEffect, useState } from 'react'
+import Link from 'next/link'
+import dynamic from 'next/dynamic'
+import { firebase } from '../../lib/firebase'
+import Layout from '../../components/layout'
 
-const Map = dynamic(() => import("../../components/mapbox"), {
+const Map = dynamic(() => import('../../components/mapbox'), {
   ssr: false,
   loading: () => (
-    <div className="loader-wrapper is-active">
-      <div className="loader is-loading" />
+    <div className='loader-wrapper is-active'>
+      <div className='loader is-loading' />
     </div>
   )
-});
+})
 
 const Demo = () => {
-  const [value, setValue] = useState(0);
+  const [value, setValue] = useState(0)
   const [geojson, setGeojson] = useState({
-    type: "FeatureCollection",
+    type: 'FeatureCollection',
     features: []
-  });
+  })
   useEffect(() => {
-    var ref = firebase.database().ref("/");
-    ref.on("value", snapshot => {
-      const recordObject = snapshot.val();
+    var ref = firebase.database().ref('/')
+    ref.on('value', snapshot => {
+      const recordObject = snapshot.val()
       if (recordObject) {
         const obj = {
-          type: "FeatureCollection",
+          type: 'FeatureCollection',
           features: []
-        };
+        }
         Object.keys(recordObject).forEach(key => {
           obj.features.push({
-            type: "Feature",
+            type: 'Feature',
             properties: {
               createdAt: recordObject[key].createdAt,
-              "pm2.5": recordObject[key].pm2p5,
+              'pm2.5': recordObject[key].pm2p5,
               pm10: recordObject[key].pm10
             },
             geometry: {
-              type: "Point",
+              type: 'Point',
               coordinates: [recordObject[key].long, recordObject[key].lat]
             }
-          });
-        });
-        setGeojson(obj);
+          })
+        })
+        setGeojson(obj)
       } else {
         setGeojson({
-          type: "FeatureCollection",
+          type: 'FeatureCollection',
           features: []
-        });
+        })
       }
-    });
+    })
 
-    return () => ref.off();
-  }, []);
+    return () => ref.off()
+  }, [])
 
   // console.log(new Date(), geojson);
 
   return (
     <Layout noFooter>
-      <section className="section" style={{ paddingBottom: 0 }}>
-        <div className="container">
-          <nav className="breadcrumb" aria-label="breadcrumbs">
+      <section className='section' style={{ paddingBottom: 0 }}>
+        <div className='container'>
+          <nav className='breadcrumb' aria-label='breadcrumbs'>
             <ul>
               <li>
-                <Link href="/">
+                <Link href='/'>
                   <a>Home</a>
                 </Link>
               </li>
               <li>
-                <Link href="/air">
+                <Link href='/air'>
                   <a>Air Quality Monitoring</a>
                 </Link>
               </li>
-              <li className="is-active">
-                <Link href="/air/demo">
+              <li className='is-active'>
+                <Link href='/air/demo'>
                   <a>Demo</a>
                 </Link>
               </li>
             </ul>
           </nav>
 
-          <div className="content-container">
-            <div className="content">
-              <h2 className="title">
-                {value === 0 ? "Now" : `${-value} minute(s) ago`}
+          <div className='content-container'>
+            <div className='content'>
+              <h2 className='title'>
+                {value === 0 ? 'Now' : `${-value} minute(s) ago`}
               </h2>
               <input
-                className="slider is-fullwidth is-info"
+                className='slider is-fullwidth is-info'
                 step={1}
                 min={-4320}
                 max={0}
                 value={value}
-                type="range"
+                type='range'
                 onChange={e => {
-                  setValue(parseInt(e.target.value, 10));
+                  setValue(parseInt(e.target.value, 10))
                 }}
               />
             </div>
           </div>
         </div>
       </section>
-      <div className="map">
+      <div className='map'>
         <Map geojson={geojson} value={value} />
       </div>
       <style jsx>
@@ -143,9 +143,9 @@ const Demo = () => {
         `}
       </style>
     </Layout>
-  );
-};
+  )
+}
 
-Demo.getInitialProps = () => ({});
+Demo.getInitialProps = () => ({})
 
-export default Demo;
+export default Demo

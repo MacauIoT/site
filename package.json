@@ -6,7 +6,8 @@
   "scripts": {
     "dev": "next",
     "build": "next build",
-    "start": "next start"
+    "start": "next start",
+    "lint": "standard"
   },
   "dependencies": {
     "@zeit/next-css": "^1.0.1",
