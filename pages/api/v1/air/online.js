@@ -24,7 +24,7 @@ if (!admin.apps.length) {
 }
 
 const db = admin.database()
-const ref = db.ref('/records')
+const ref = db.ref('/online')
 
 export default async (req, res) => {
   if (req.method !== 'POST') {
@@ -35,24 +35,14 @@ export default async (req, res) => {
 
   const { body = {} } = req
 
-  if (!body.lat) {
+  if (!body.ip) {
     return res.json({
-      error: 'body require lat.'
-    })
-  }
-  if (!body.long) {
-    return res.json({
-      error: 'body require long.'
-    })
-  }
-  if (!body['pm2.5']) {
-    return res.json({
-      error: 'body require pm2.5 value.'
+      error: 'body require ip.'
     })
   }
   if (!body.deviceId) {
     return res.json({
-      error: 'body require deviceId value.'
+      error: 'body require deviceId.'
     })
   }
 
@@ -61,10 +51,7 @@ export default async (req, res) => {
 
   const data = {
     id,
-    lat: parseFloat(body.lat),
-    long: parseFloat(body.long),
-    pm2p5: parseFloat(body['pm2.5']),
-    pm10: body.pm10 ? parseFloat(body.pm10) : null,
+    ip: body.ip,
     deviceId: body.deviceId,
     createdAt: Date.now()
   }

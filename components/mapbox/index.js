@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import ReactMapboxGl, { GeoJSONLayer } from 'react-mapbox-gl'
+import ReactMapboxGl, { GeoJSONLayer, Popup } from 'react-mapbox-gl'
 import moment from 'moment-timezone'
 // import geojson from "../../lib/geo";
 
@@ -10,7 +10,7 @@ const Map = ReactMapboxGl({
   minZoom: 11.8
 })
 
-export default ({ geojson, value }) => {
+export default ({ geojson, value, popup, setPopup }) => {
   // console.log(geojson);
   const [state] = useState({
     zoom: [11.97],
@@ -108,26 +108,39 @@ export default ({ geojson, value }) => {
               0.8,
               moment()
                 .tz('Asia/Macau')
-                .add(1, 'hours')
                 .subtract(-value, 'minutes')
-                .valueOf(),
-              0.5,
-              moment()
-                .tz('Asia/Macau')
-                .add(3, 'hours')
-                .subtract(-value, 'minutes')
+                .add(1, 'second')
                 .valueOf(),
               0
             ]
           }}
+          circleOnClick={(e) => {
+            // console.log(Object.keys(e))
+            // console.log(e.features)
+            // console.log(e.features[0].properties)
+            if (e.features.length) {
+              setPopup({
+                // long: e.lngLat.lng,
+                // lat: e.lngLat.lat,
+                ...e.features[0].properties
+              })
+            }
+          }}
         />
-        {/* <Layer type='symbol' id='marker' layout={{ 'icon-image': 'marker-15' }}>
-          <Feature coordinates={[-0.481747846041145, 51.3233379650232]} />
-        </Layer> */}
+        {!!popup && (
+          <Popup coordinates={[popup.long, popup.lat]} onClick={() => setPopup(null)}>
+            <div className='popup'>
+              <div><b>createdAt:</b> {moment(popup.createdAt).tz('Asia/Macau').format('YYYY-MM-DD HH:mm:ss')}</div>
+              <div><b>deviceId:</b> {popup.deviceId}</div>
+              <div><b>pm2.5:</b> {popup['pm2.5']}</div>
+              <div><b>pm10:</b> {popup.pm10}</div>
+            </div>
+          </Popup>
+        )}
       </Map>
       <div id='console'>
         <h3 className='is-size-5'>Air Quality</h3>
-        <p>Real-time air pollution monitoring with sensors on city bus</p>
+        <p>Real-time air pollution monitoring with sensors on city bus. You can see all the data <a href='/air/data' target='_blank'>here</a>.</p>
         <div className='session'>
           <h4>PM 2.5 levels</h4>
           <div className='row colors' />
@@ -151,6 +164,9 @@ export default ({ geojson, value }) => {
           top: 0;
           box-sizing: content-box;
           pointer-events: none;
+        }
+        #console a {
+          pointer-events: auto;
         }
 
         @media only screen and (max-width: 920px) {
@@ -189,6 +205,14 @@ export default ({ geojson, value }) => {
         .l {
           display: inline-block;
           text-align: center;
+        }
+
+        .popup {
+          background: white;
+          color: #3f618c;
+          font-weight: 400;
+          padding: 5px;
+          border-radius: 2px;
         }
       `}
       </style>

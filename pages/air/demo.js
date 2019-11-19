@@ -14,13 +14,14 @@ const Map = dynamic(() => import('../../components/mapbox'), {
 })
 
 const Demo = () => {
+  const [popup, setPopup] = useState(null)
   const [value, setValue] = useState(0)
   const [geojson, setGeojson] = useState({
     type: 'FeatureCollection',
     features: []
   })
   useEffect(() => {
-    var ref = firebase.database().ref('/')
+    var ref = firebase.database().ref('/records')
     ref.on('value', snapshot => {
       const recordObject = snapshot.val()
       if (recordObject) {
@@ -34,7 +35,10 @@ const Demo = () => {
             properties: {
               createdAt: recordObject[key].createdAt,
               'pm2.5': recordObject[key].pm2p5,
-              pm10: recordObject[key].pm10
+              pm10: recordObject[key].pm10,
+              deviceId: recordObject[key].deviceId,
+              lat: recordObject[key].lat,
+              long: recordObject[key].long
             },
             geometry: {
               type: 'Point',
@@ -93,6 +97,7 @@ const Demo = () => {
                 value={value}
                 type='range'
                 onChange={e => {
+                  setPopup(null)
                   setValue(parseInt(e.target.value, 10))
                 }}
               />
@@ -101,7 +106,7 @@ const Demo = () => {
         </div>
       </section>
       <div className='map'>
-        <Map geojson={geojson} value={value} />
+        <Map geojson={geojson} value={value} popup={popup} setPopup={setPopup} />
       </div>
       <style jsx>
         {`

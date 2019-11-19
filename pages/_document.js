@@ -21,10 +21,10 @@ class MyDocument extends Document {
           />
           <script
             defer
-            src='https://use.fontawesome.com/releases/v5.3.1/js/all.js'
+            src='https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.3.1/js/all.js'
           />
           <link
-            href='https://api.mapbox.com/mapbox-gl-js/v1.4.1/mapbox-gl.css'
+            href='https://cdn.jsdelivr.net/npm/mapbox-gl@1.4.1/dist/mapbox-gl.css'
             rel='stylesheet'
           />
         </Head>
