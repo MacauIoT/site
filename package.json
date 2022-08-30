@@ -15,7 +15,7 @@
     "firebase-admin": "8.7.0",
     "lodash": "^4.17.15",
     "mapbox-gl": "^1.5.0",
-    "moment-timezone": "^0.5.27",
+    "moment-timezone": "^0.5.35",
     "ms": "2.1.2",
     "next": "^9.1.4-canary.3",
     "now": "latest",
